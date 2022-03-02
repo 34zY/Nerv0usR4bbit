@@ -1,6 +1,6 @@
 # ============================================== #
 # POST EXPLOITATION ENUMERATION TOOL FOR WINDOWS #
-# @34ZY						 #
+# @34ZY 					 #
 # ============================================== #
 
 import os
