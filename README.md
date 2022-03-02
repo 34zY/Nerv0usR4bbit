@@ -34,8 +34,8 @@
 **Usage :**
 
 ```bash 
-git clone https://github.com/34zY/Nerv0usR4bbit
-cd Nerv0usR4bbit/
+git clone https://github.com/34zY/Nerv0usR4bbit.git
+cd Nerv0usR4bbit-main/
 python3 Nerv0usR4bbit.py
 ```
 
