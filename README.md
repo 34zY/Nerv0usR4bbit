@@ -24,7 +24,10 @@
 
 ```
 *This project can be updated sometimes ...*
- 
+
+**Tested on :**
+
+- Windows 10 - 10.0.19044 N/A build 19044
  
 **Usage :**
 
