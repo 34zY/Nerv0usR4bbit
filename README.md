@@ -1,5 +1,5 @@
 # ɴᴇʀᴠ0ᴜs ʀ4ʙʙɪᴛ
-**Automated Pᴏsᴛ Exᴘʟᴏɪᴛᴀᴛɪᴏɴ Eɴᴜᴍᴇʀᴀᴛɪᴏɴ ᴛᴏᴏʟ for Windows target **
+**Automated Pᴏsᴛ Exᴘʟᴏɪᴛᴀᴛɪᴏɴ Eɴᴜᴍᴇʀᴀᴛɪᴏɴ ᴛᴏᴏʟ for Windows target**
 **Author : @34zY**
 -----------------------------------
 
