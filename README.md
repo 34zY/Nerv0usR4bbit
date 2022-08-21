@@ -41,7 +41,7 @@ python3 Nerv0usR4bbit.py
 
 **Details :** 
 
-- R4bbit is dedicated to make basic enumeration process on Windows machines. Very practical when making lateral movements between machines in a penetration test or red teaming process.
+- R4bbit is dedicated to make basic enumeration process on Windows machines. Very practical when making lateral movements between machines in a penetration test or red teaming engagement.
 
 **Modules :** 
 
