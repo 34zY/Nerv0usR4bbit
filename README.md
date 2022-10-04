@@ -8,22 +8,23 @@
 
 ```text
 
-        .--,_
-       / ,/ /\
-      / // /\ \
-     / // /_\\|
-   .'  ' (
-  /__    \.-"""-._
- / 0>  ' .    '    `-.          |> ɴᴇʀᴠ0ᴜs ʀ4ʙʙɪᴛ >|
-(       .  '      "   `.        
- `/─-.-'     "       '  ;       |> Pᴏsᴛ Exᴘʟᴏɪᴛᴀᴛɪᴏɴ Eɴᴜᴍᴇʀᴀᴛɪᴏɴ ᴛᴏᴏʟ >|
- /   `.'  "  .  .-'    " ;   	|> @34zY >|
-~     : .     .'          ;
-      `.   ' :     '   '  ;
-        )  _.". "     .  ";..
-      .'_.'   .'   '  __.,   `\
-     '"      ""''---'`    "''"`
-
+----------------------------------------------------------------------------
+|          .--,_    \     🐰    |  \ <<Version>>  /   |    \  <<System>> / |
+|         / ,/ /\    \    💙    |   \  > 2.0 <   /    |     \ >Windows< /  |
+|        / // /\ \    \----------------------------------------------------|
+|       / // /_\\|                                                         |
+|     .'  ' (                                                              |
+|    /__    \.-"""-._                                                      |
+|   / 0>  ' .    '    `-.          <<ɴᴇʀᴠ0ᴜs ʀ4ʙʙɪᴛ>>                      |
+|  (       .  '      "   `.                                                |      
+|   `/─-.-'     "       '  ;       <<Pᴏsᴛ Exᴘʟᴏɪᴛᴀᴛɪᴏɴ Eɴᴜᴍᴇʀᴀᴛɪᴏɴ ᴛᴏᴏʟ>>  |
+|   /   `.'  "  .  .-'    " ;      <<author : @34ZY>>                      |
+|  ~     : .     .'          ;                                             |
+|        `.   ' :     '   '  ;                                             |
+|          )  _.". "     .  ";..                                           |
+|        .'_.'   .'   '  __.,   `\                                         |
+|       '"      ""''---'`    "''"`                                         |
+----------------------------------------------------------------------------
 ```
 *This project can be updated sometimes ...*
 
@@ -41,11 +42,15 @@ python3 Nerv0usR4bbit.py
 
 **Details :** 
 
-- R4bbit is dedicated to make basic enumeration process on Windows machines. Very practical when making lateral movements between machines in a penetration test or red teaming engagement.
+- R4bbit is dedicated to make basic enumeration process on Windows machines. Very practical when making lateral movements between machines in a penetration test or red teaming process.
 
 **Modules :** 
 
 -  Choose number of threads between differents process.
+-  Check basic Active Directory configuration.
+-  Download netcat on victim server.
+-  Transfer payload from your C2 server to victim machine.
+-  Open webserver on victim machine.
 -  Display TCP|OPEN ports on the machine.
 -  Check user privilege & user informations related to AD Groups / Organisation.
 -  Check total informations about kernel & hardware of the tharget.
