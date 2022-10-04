@@ -42,7 +42,7 @@ python3 Nerv0usR4bbit.py
 
 **Details :** 
 
-- R4bbit is dedicated to make basic enumeration process on Windows machines. Very practical when making lateral movements between machines in a penetration test or red teaming process.
+- R4bbit is dedicated to make basic enumeration process on Windows machines with ajustable sleep time avoiding EDR/XDR flags. Very practical when making lateral movements between machines in a penetration test or red teaming process.
 
 **Modules :** 
 
@@ -57,4 +57,7 @@ python3 Nerv0usR4bbit.py
 -  Check running process on the machine to find a way to get an privesc.
 -  Checking local network status & other machines connected to.
 -  Find and check connections between others machines on the network.
+-  Check for juicy files containing passwords.
+-  Checking network interface configuration.
+-  Checking installed applications.
 
