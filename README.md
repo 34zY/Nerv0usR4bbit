@@ -3,7 +3,7 @@
 
 **Author : @34zY**
 
-NEW PORTABLE VERSION SOON AVAILABLE.
+/!\ NEW PORTABLE VERSION SOON AVAILABLE.
 
 -----------------------------------
 
