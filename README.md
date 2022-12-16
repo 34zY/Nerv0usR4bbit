@@ -48,7 +48,7 @@ python3 Nerv0usR4bbit.py
 
 **Modules :** 
 
--  Choose number of threads between differents process.
+-  Choose number of delay time between differents process.
 -  Check basic Active Directory configuration.
 -  Download netcat on victim server.
 -  Transfer payload from your C2 server to victim machine.
